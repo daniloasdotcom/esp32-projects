@@ -33,3 +33,10 @@ function doPost(e) {
   return ContentService.createTextOutput("OK")
     .setMimeType(ContentService.MimeType.TEXT);
 }
+
+## 📁 Estrutura do Repositório
+* `/esp32_firmware`: Código-fonte em C++ para embarcar no microcontrolador.
+* `/flutter_app`: Código-fonte do aplicativo móvel (Dart/Flutter).
+
+## 📊 Status
+Protótipo funcional validado.
