@@ -33,6 +33,7 @@ function doPost(e) {
   return ContentService.createTextOutput("OK")
     .setMimeType(ContentService.MimeType.TEXT);
 }
+```
 
 ## 📁 Estrutura do Repositório
 * `/esp32_firmware`: Código-fonte em C++ para embarcar no microcontrolador.
