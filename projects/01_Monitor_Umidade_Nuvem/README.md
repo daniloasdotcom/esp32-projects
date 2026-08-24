@@ -12,16 +12,24 @@ Este projeto demonstra uma integração "Full-Stack IoT", dividido nas seguintes
   * Microcontrolador ESP32 programado em C++.
   * Leitura analógica de sensor de umidade do solo.
   * Lógica de conexão Wi-Fi e rotina de envio de dados via requisições HTTP POST.
-* **Backend / Nuvem:** 
-  * Google Sheets atuando como banco de dados e API (via Google Apps Script) para armazenamento estruturado das leituras de campo.
 * **Frontend Mobile (Flutter):**
   * Aplicativo desenvolvido em framework Flutter (Linguagem Dart).
   * Consumo da API (HTTP GET) para resgatar os dados da nuvem.
-  * Renderização de interface de usuário (UI) responsiva para monitoramento contínuo dos níveis de umidade.
+  * Renderização de interface de usuário (UI) responsiva e gráficos dinâmicos para monitoramento contínuo dos níveis de umidade.
 
-## 📁 Estrutura do Repositório
-* `/esp32_firmware`: Código-fonte em C++ para embarcar no microcontrolador.
-* `/flutter_app`: Código-fonte do aplicativo móvel (Dart/Flutter).
+## ☁️ Backend: Google Apps Script (Google Sheets)
+O Google Sheets atua como banco de dados estruturado e API. O script abaixo foi utilizado no Google Apps Script para receber o payload JSON do ESP32 via HTTP POST e registrar os dados na planilha:
 
-## 📊 Status
-Protótipo funcional validado.
+```javascript
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActive().getSheetByName("Setor");
+  const data = JSON.parse(e.postData.contents || "{}");
+
+  const agora = new Date();
+  const valor = Number(data.valorADC);
+
+  sheet.appendRow([agora, valor]);
+
+  return ContentService.createTextOutput("OK")
+    .setMimeType(ContentService.MimeType.TEXT);
+}
